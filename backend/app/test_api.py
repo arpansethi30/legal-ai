@@ -1,79 +1,78 @@
-import asyncio
-import httpx
+import requests
 import json
-import os
-from datetime import datetime
+import time
 
-async def test_agent():
-    base_url = "http://localhost:8000"
-    client = httpx.AsyncClient(timeout=60.0)  # Longer timeout for complex agent tasks
-    
-    # Task 1: Execute a complex legal task
-    print("\n=== Testing AI Agent with Complex Task ===")
-    agent_task = {
-        "task": "Draft a software development agreement between TechCorp and DevConsult LLC. TechCorp wants to retain all IP rights, while DevConsult wants fair compensation for their work and a 12-month maintenance period. There should be penalties for late delivery.",
-        "context": {
-            "industry": "software",
-            "client_profile": "enterprise technology company",
-            "vendor_profile": "specialized development consultancy"
+BASE_URL = "http://localhost:8000"
+
+def test_endpoint(endpoint, data, description):
+    print(f"\n===== Testing: {description} =====")
+    start_time = time.time()
+    try:
+        response = requests.post(f"{BASE_URL}{endpoint}", json=data)
+        print(f"Status Code: {response.status_code}")
+        if response.status_code == 200:
+            result = response.json()
+            print(f"Success! Response received in {time.time() - start_time:.2f} seconds")
+            return result
+        else:
+            print(f"Error: {response.text}")
+            return None
+    except Exception as e:
+        print(f"Exception: {str(e)}")
+        return None
+
+# 1. Test legal reasoning
+legal_reasoning_data = {
+    "legal_text": "The parties agree that all intellectual property created during the term of this agreement shall be owned exclusively by the Client, and Contractor hereby assigns all rights to such intellectual property to Client.",
+    "question": "Who owns the intellectual property created during the agreement?",
+    "methods": ["Textual Analysis", "Statutory Interpretation"]
+}
+
+reasoning_result = test_endpoint(
+    "/workflow/reasoning", 
+    legal_reasoning_data,
+    "Legal Reasoning with Multiple Methods"
+)
+
+# 2. Test expert consultation
+expert_consultation_data = {
+    "question": "Is this non-compete clause enforceable?",
+    "document": "The Contractor agrees not to engage in any competing business within the entire United States for a period of 5 years after termination of this Agreement.",
+    "experts": ["Contract Law Expert", "Employment Law Expert", "Litigation Expert"]
+}
+
+consultation_result = test_endpoint(
+    "/workflow/consult", 
+    expert_consultation_data,
+    "Expert Consultation Simulation"
+)
+
+# 3. Test issue identification
+issue_identification_data = {
+    "document": "This agreement shall commence on January 1, 2025 and continue until terminated by either party with 30 days notice. Payment terms are net 30. All disputes shall be resolved through binding arbitration."
+}
+
+issues_result = test_endpoint(
+    "/workflow/identify-issues", 
+    issue_identification_data,
+    "Legal Issue Identification"
+)
+
+# 4. Test client memo generation (if we have previous results)
+if reasoning_result:
+    client_memo_data = {
+        "analysis": reasoning_result,
+        "client_info": {
+            "name": "Acme Corporation",
+            "contact": "John Smith",
+            "matter": "IP Agreement Review"
         }
     }
     
-    print("Sending request to agent...")
-    response = await client.post(f"{base_url}/agent/execute", json=agent_task)
-    print(f"Status: {response.status_code}")
-    
-    if response.status_code == 200:
-        result = response.json()
-        print(f"Task ID: {result.get('task_id')}")
-        print("\nPlan generated:")
-        for i, step in enumerate(result.get('result', {}).get('plan', [])):
-            print(f"  Step {i+1}: {step.get('action')} - {step.get('expected_output')}")
-        
-        # Extract the contract if available
-        synthesis = result.get('result', {}).get('synthesis', {})
-        print("\nExecutive Summary:")
-        print(synthesis.get('executive_summary', 'Not available'))
-        
-        print("\nKey Recommendations:")
-        for rec in synthesis.get('recommendations', ['Not available']):
-            print(f"- {rec}")
-    
-    # Task 2: Test mediation
-    print("\n=== Testing Dispute Mediation ===")
-    mediation_request = {
-        "party_a_position": "We believe the software has significant bugs that prevent us from using it as intended. We want a full refund.",
-        "party_b_position": "The software meets all specifications in the contract. Any issues are due to the client's hardware configuration.",
-        "disputed_terms": ["Quality standards", "Acceptance criteria", "Refund policy"],
-        "context": "This is a $50,000 contract for custom inventory management software."
-    }
-    
-    print("Requesting mediation...")
-    response = await client.post(f"{base_url}/agent/mediate", json=mediation_request)
-    print(f"Status: {response.status_code}")
-    
-    if response.status_code == 200:
-        result = response.json()
-        
-        print("\nMediation Analysis:")
-        print("\nCommon Ground:")
-        for item in result.get('common_ground', ['Not found']):
-            print(f"- {item}")
-            
-        print("\nCompromise Solutions:")
-        for solution in result.get('compromise_solutions', ['Not found']):
-            print(f"- {solution}")
-    
-    # Save test results
-    os.makedirs("test_results", exist_ok=True)
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    with open(f"test_results/agent_test_{timestamp}.json", "w") as f:
-        json.dump({
-            "agent_task_result": response.json() if response.status_code == 200 else {"error": "Request failed"},
-            "timestamp": datetime.now().isoformat()
-        }, f, indent=2)
-    
-    await client.aclose()
+    memo_result = test_endpoint(
+        "/workflow/client-memo", 
+        client_memo_data,
+        "Client Memo Generation"
+    )
 
-if __name__ == "__main__":
-    asyncio.run(test_agent())
+print("\n===== All Tests Completed =====")
