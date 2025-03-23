@@ -2,7 +2,7 @@ from fastapi import Request
 import time
 import uuid
 from typing import Callable
-from fastapi.middleware.base import BaseHTTPMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 
 class LegalAuditMiddleware(BaseHTTPMiddleware):
     """

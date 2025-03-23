@@ -1,0 +1,91 @@
+.
+├── app
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-312.pyc
+│   │   ├── config.cpython-312.pyc
+│   │   ├── main.cpython-312.pyc
+│   │   ├── middleware.cpython-312.pyc
+│   │   └── test_api.cpython-312.pyc
+│   ├── app.py
+│   ├── config.py
+│   ├── core
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-312.pyc
+│   │   │   ├── agent.cpython-312.pyc
+│   │   │   ├── cognitive_system.cpython-312.pyc
+│   │   │   ├── document_processor.cpython-312.pyc
+│   │   │   ├── expert_consultation.cpython-312.pyc
+│   │   │   ├── knowledge_base.cpython-312.pyc
+│   │   │   ├── legal_authority.cpython-312.pyc
+│   │   │   ├── legal_reasoner.cpython-312.pyc
+│   │   │   ├── legal_reasoning.cpython-312.pyc
+│   │   │   ├── llm.cpython-312.pyc
+│   │   │   └── practice_integration.cpython-312.pyc
+│   │   ├── advanced_legal.py
+│   │   ├── adversarial.py
+│   │   ├── agent.py
+│   │   ├── citations.py
+│   │   ├── cognitive_system.py
+│   │   ├── contract_simulation.py
+│   │   ├── contract_templates.py
+│   │   ├── document_embeddings.py
+│   │   ├── document_processor.py
+│   │   ├── expert_consultation.py
+│   │   ├── knowledge_base.py
+│   │   ├── legal_analyzer.py
+│   │   ├── legal_authority.py
+│   │   ├── legal_graph.py
+│   │   ├── legal_reasoner.py
+│   │   ├── legal_reasoning.py
+│   │   ├── llm.py
+│   │   ├── multi_agent.py
+│   │   ├── practice_integration.py
+│   │   ├── regulatory_compliance.py
+│   │   └── temporal_reasoning.py
+│   ├── main.py
+│   ├── middleware.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── contract.py
+│   │   ├── negotiation.py
+│   │   └── user.py
+│   ├── routers
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-312.pyc
+│   │   │   ├── agent.cpython-312.pyc
+│   │   │   ├── analytics.cpython-312.pyc
+│   │   │   ├── auth.cpython-312.pyc
+│   │   │   ├── contracts.cpython-312.pyc
+│   │   │   ├── negotiations.cpython-312.pyc
+│   │   │   ├── voice.cpython-312.pyc
+│   │   │   └── workflow.cpython-312.pyc
+│   │   ├── agent.py
+│   │   ├── analytics.py
+│   │   ├── auth.py
+│   │   ├── blockchain.py
+│   │   ├── contracts.py
+│   │   ├── negotiations.py
+│   │   ├── voice.py
+│   │   └── workflow.py
+│   ├── services
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-312.pyc
+│   │   │   ├── contract_gen.cpython-312.pyc
+│   │   │   ├── langtrace.cpython-312.pyc
+│   │   │   └── speech_proc.cpython-312.pyc
+│   │   ├── apify_service.py
+│   │   ├── auth_service.py
+│   │   ├── blockchain.py
+│   │   ├── contract_gen.py
+│   │   ├── langtrace.py
+│   │   ├── negotiation.py
+│   │   └── speech_proc.py
+│   └── test_api.py
+├── output.txt
+└── requirements.txt
+
+10 directories, 79 files

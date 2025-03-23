@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from dotenv import load_dotenv
 
-from app.routers import auth, contracts, negotiations, voice, agent, analytics, advanced_legal, workflow
+from app.routers import auth, contracts, negotiations, voice, agent, analytics, workflow
 from app.services.langtrace import setup_langtrace
 from app.middleware import LegalAuditMiddleware, PrivilegeProtectionMiddleware
 
@@ -40,7 +40,6 @@ app.include_router(negotiations.router, prefix="/negotiations", tags=["Negotiati
 app.include_router(voice.router, prefix="/voice", tags=["Voice"])
 app.include_router(agent.router, prefix="/agent", tags=["AI Agent"])
 app.include_router(analytics.router, prefix="/analytics", tags=["Legal Analytics"])
-app.include_router(advanced_legal.router, prefix="/advanced", tags=["Advanced Legal AI"])
 app.include_router(workflow.router, prefix="/workflow", tags=["Legal Workflow"])
 
 @app.get("/")
